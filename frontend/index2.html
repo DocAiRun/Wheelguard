@@ -492,9 +492,21 @@ let currentReport = null;
 
 // ── INIT ──────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
-  // Check for magic link callback
-  const params = new URLSearchParams(window.location.search);
-  
+  // Handle Supabase magic link callback
+  const hash = window.location.hash;
+  if (hash && hash.includes('access_token')) {
+    const params = new URLSearchParams(hash.substring(1));
+    const token = params.get('access_token');
+    const email = params.get('email') || '';
+    if (token) {
+      localStorage.setItem('wg_token', token);
+      currentToken = token;
+      await loadUserAndShowDashboard(email);
+      window.history.replaceState({}, '', '/index2.html');
+      return;
+    }
+  }
+
   // Check stored session
   const token = localStorage.getItem('wg_token');
   const email = localStorage.getItem('wg_email');
@@ -506,11 +518,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     showPage('landing');
   }
 
-  // Handle success redirect from Stripe
+  const params = new URLSearchParams(window.location.search);
   if (params.get('success')) {
     showToast('✓ SUBSCRIPTION ACTIVATED', 'success');
     await refreshUser();
-    window.history.replaceState({}, '', '/');
+    window.history.replaceState({}, '', '/index2.html');
   }
 });
 
