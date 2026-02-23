@@ -158,7 +158,7 @@ async def magic_link(request: Request):
         supabase.auth.sign_in_with_otp({
             "email": email,
             "options": {
-                "email_redirect_to": f"{FRONTEND_URL}/dashboard"
+                "email_redirect_to": f"{FRONTEND_URL}/index2.html"
             }
         })
         # Ensure user exists in our users table
