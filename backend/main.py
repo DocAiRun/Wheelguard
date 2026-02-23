@@ -22,7 +22,11 @@ PRICE_PRO             = "price_1T3ww0AHfGepCjte6wnWaCnK"
 PRICE_TEAM            = "price_1T3wwUAHfGepCjteORV5RU5N"
 
 try:
+    print(f"URL: '{SUPABASE_URL}'")
+    print(f"KEY length: {len(SUPABASE_SERVICE_KEY)}")
+    print(f"KEY start: '{SUPABASE_SERVICE_KEY[:20]}'")
     supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+    print("Supabase OK")
 except Exception as e:
     print(f"Supabase init error: {e}")
     supabase = None
