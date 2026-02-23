@@ -21,7 +21,11 @@ FRONTEND_URL          = os.environ.get("FRONTEND_URL", "https://wheelguard-front
 PRICE_PRO             = "price_1T3ww0AHfGepCjte6wnWaCnK"
 PRICE_TEAM            = "price_1T3wwUAHfGepCjteORV5RU5N"
 
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+try:
+    supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+except Exception as e:
+    print(f"Supabase init error: {e}")
+    supabase = None
 
 app = FastAPI(
     title="WheelGuard API",
