@@ -1,0 +1,23 @@
+services:
+  # Backend — FastAPI
+  - type: web
+    name: wheelguard-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    envVars:
+      - key: PYTHON_ENV
+        value: production
+
+  # Frontend — Static site
+  - type: web
+    name: wheelguard-frontend
+    runtime: static
+    staticPublishPath: ./frontend
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
