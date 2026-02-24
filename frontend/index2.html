@@ -493,7 +493,17 @@ const API = 'https://wheelguard.onrender.com';
 let currentUser = null;
 let currentToken = null;
 let currentReport = null;
+supabaseClient.auth.onAuthStateChange(async (event, session) => {
+  if (event === 'SIGNED_IN' && session) {
+    currentToken = session.access_token;
+    localStorage.setItem('wg_token', session.access_token);
+    localStorage.setItem('wg_email', session.user.email);
+    await loadUserAndShowDashboard(session.user.email);
+  }
+});
 
+// ── INIT ──────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', async () => {
 // ── INIT ──────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
   // Supabase gère automatiquement le token depuis l'URL
