@@ -492,22 +492,17 @@ let currentReport = null;
 
 // ── INIT ──────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
-  // Handle Supabase magic link callback
-  const hash = window.location.hash;
-  if (hash && hash.includes('access_token')) {
-    const params = new URLSearchParams(hash.substring(1));
-    const token = params.get('access_token');
-    const email = params.get('email') || '';
-    if (token) {
-      localStorage.setItem('wg_token', token);
-      currentToken = token;
-      await loadUserAndShowDashboard(email);
-      window.history.replaceState({}, '', '/index2.html');
-      return;
-    }
+  // Supabase gère automatiquement le token depuis l'URL
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  
+  if (session) {
+    currentToken = session.access_token;
+    localStorage.setItem('wg_token', session.access_token);
+    localStorage.setItem('wg_email', session.user.email);
+    await loadUserAndShowDashboard(session.user.email);
+    return;
   }
 
-  // Check stored session
   const token = localStorage.getItem('wg_token');
   const email = localStorage.getItem('wg_email');
   
@@ -525,7 +520,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     window.history.replaceState({}, '', '/index2.html');
   }
 });
-
 // ── NAVIGATION ────────────────────────────────────
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
