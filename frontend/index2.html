@@ -1,6 +1,3 @@
-const SUPABASE_URL = 'https://lqxzyzozabyuqhxdtomv.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxeHp5em96YWJ5dXFoeGR0b212Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3ODIwMjQsImV4cCI6MjA4NzM1ODAyNH0.GQRupBIKJDKGeQaypkjcF0ZAgbGcX3Nw32R1qrTae-w';
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +5,8 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WheelGuard — Algebraic NaN Protection for PyTorch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
   --bg:      #040810;
@@ -33,19 +30,13 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden}
-
-/* SCANLINES */
 body::before{content:'';position:fixed;inset:0;z-index:999;pointer-events:none;
   background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px)}
-
-/* GRID */
 .grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);
   background-size:60px 60px}
 .grid-bg::after{content:'';position:absolute;inset:0;
   background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(0,229,255,0.06) 0%,transparent 70%)}
-
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
   padding:16px 48px;background:rgba(4,8,16,0.9);backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(0,229,255,0.1)}
@@ -64,66 +55,42 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-logout:hover{border-color:var(--red);color:var(--red)}
 .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 20px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);cursor:pointer;letter-spacing:2px;transition:all 0.2s}
 .nav-cta:hover{background:var(--cyan);color:var(--bg);box-shadow:var(--glow-c)}
-
-/* PAGES */
 .page{display:none;position:relative;z-index:1}
 .page.active{display:block}
 
-/* ── LANDING ─────────────────────────────────────── */
-#page-landing{}
-
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:120px 48px 80px;text-align:center}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;
-  letter-spacing:3px;color:var(--cyan2);border:1px solid rgba(0,229,255,0.2);padding:6px 16px;
-  margin-bottom:32px;animation:fadeSlideDown 0.8s ease both}
-.hero-badge::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;
-  box-shadow:var(--glow-g);animation:pulse 2s ease infinite}
-.hero-title{font-family:var(--head);font-size:clamp(42px,7vw,88px);font-weight:900;line-height:1;
-  margin-bottom:24px;animation:fadeSlideDown 0.8s 0.1s ease both}
+/* LANDING */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 48px 80px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--cyan2);border:1px solid rgba(0,229,255,0.2);padding:6px 16px;margin-bottom:32px}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:var(--glow-g);animation:pulse 2s ease infinite}
+.hero-title{font-family:var(--head);font-size:clamp(42px,7vw,88px);font-weight:900;line-height:1;margin-bottom:24px}
 .hero-title .line1{color:white}
 .hero-title .line2{color:var(--cyan);text-shadow:var(--glow-c);display:block}
 .hero-title .line2 span{color:var(--red);text-shadow:var(--glow-r)}
-.hero-sub{font-size:20px;color:var(--textdim);max-width:600px;margin:0 auto 48px;
-  animation:fadeSlideDown 0.8s 0.2s ease both}
+.hero-sub{font-size:20px;color:var(--textdim);max-width:600px;margin:0 auto 48px}
 .hero-sub strong{color:var(--text)}
-.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeSlideDown 0.8s 0.3s ease both}
-
-.btn-primary{font-family:var(--mono);font-size:13px;letter-spacing:2px;padding:14px 36px;
-  background:var(--cyan);color:var(--bg);border:none;cursor:pointer;font-weight:700;transition:all 0.2s;
-  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{font-family:var(--mono);font-size:13px;letter-spacing:2px;padding:14px 36px;background:var(--cyan);color:var(--bg);border:none;cursor:pointer;font-weight:700;transition:all 0.2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
 .btn-primary:hover{background:white;box-shadow:var(--glow-c);transform:translateY(-2px)}
-.btn-secondary{font-family:var(--mono);font-size:13px;letter-spacing:2px;padding:14px 36px;
-  background:transparent;color:var(--textdim);border:1px solid var(--dim);cursor:pointer;transition:all 0.2s;
-  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+.btn-secondary{font-family:var(--mono);font-size:13px;letter-spacing:2px;padding:14px 36px;background:transparent;color:var(--textdim);border:1px solid var(--dim);cursor:pointer;transition:all 0.2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
 .btn-secondary:hover{border-color:var(--cyan2);color:var(--cyan2)}
-
-.stats-bar{display:flex;justify-content:center;border-top:1px solid rgba(0,229,255,0.1);
-  border-bottom:1px solid rgba(0,229,255,0.1);background:rgba(7,13,26,0.8)}
+.stats-bar{display:flex;justify-content:center;border-top:1px solid rgba(0,229,255,0.1);border-bottom:1px solid rgba(0,229,255,0.1);background:rgba(7,13,26,0.8)}
 .stat-item{padding:24px 48px;text-align:center;border-right:1px solid rgba(0,229,255,0.08);flex:1;max-width:220px}
 .stat-item:last-child{border-right:none}
 .stat-num{font-family:var(--head);font-size:28px;font-weight:900;color:var(--cyan);text-shadow:var(--glow-c);display:block}
 .stat-label{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--textdim);text-transform:uppercase}
-
 .section{position:relative;z-index:1;padding:100px 48px;max-width:1200px;margin:0 auto}
-.section-label{font-family:var(--mono);font-size:11px;letter-spacing:4px;color:var(--cyan2);
-  margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.section-label{font-family:var(--mono);font-size:11px;letter-spacing:4px;color:var(--cyan2);margin-bottom:12px;display:flex;align-items:center;gap:12px}
 .section-label::before{content:'';width:32px;height:1px;background:var(--cyan2)}
 .section-title{font-family:var(--head);font-size:clamp(28px,4vw,46px);font-weight:900;color:white;line-height:1.1;margin-bottom:16px}
 .section-title span{color:var(--cyan)}
 .section-sub{font-size:18px;color:var(--textdim);max-width:560px;margin-bottom:64px}
-
-/* NaN panels */
 .nan-panel{background:rgba(255,45,85,0.04);border:1px solid rgba(255,45,85,0.2);padding:32px;margin-bottom:32px;position:relative}
-.nan-panel::before{content:'CRITICAL';position:absolute;top:-1px;left:24px;font-family:var(--mono);
-  font-size:10px;letter-spacing:3px;color:var(--red);background:var(--bg);padding:0 8px;transform:translateY(-50%)}
+.nan-panel::before{content:'CRITICAL';position:absolute;top:-1px;left:24px;font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--red);background:var(--bg);padding:0 8px;transform:translateY(-50%)}
 .nan-panel.safe::before{content:'WHEELGUARD';color:var(--green)}
 .nan-code{font-family:var(--mono);font-size:13px;line-height:2;color:var(--textdim)}
 .nan-code .nan{color:var(--red);font-weight:700}
 .nan-code .ok{color:var(--green)}
 .nan-code .comment{color:#2a4a6a}
-
-/* Steps */
 .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .step-card{background:var(--bg2);border:1px solid rgba(0,229,255,0.08);padding:32px 28px;position:relative;transition:all 0.3s}
 .step-card:hover{border-color:rgba(0,229,255,0.2);transform:translateY(-4px)}
@@ -131,20 +98,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .step-icon{font-size:28px;margin-bottom:16px}
 .step-title{font-family:var(--head);font-size:16px;font-weight:700;color:white;letter-spacing:1px;margin-bottom:8px}
 .step-desc{font-size:15px;color:var(--textdim);line-height:1.6}
-
-/* Pricing */
 .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .price-card{background:var(--bg2);border:1px solid rgba(0,229,255,0.08);padding:36px 28px;position:relative;transition:all 0.3s}
 .price-card.featured{border-color:var(--cyan);box-shadow:var(--glow-c),inset 0 0 60px rgba(0,229,255,0.03)}
-.price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%);
-  font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--bg);background:var(--cyan);padding:4px 16px;white-space:nowrap}
+.price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--bg);background:var(--cyan);padding:4px 16px;white-space:nowrap}
 .price-tier{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--cyan2);margin-bottom:16px}
 .price-amount{font-family:var(--head);font-size:48px;font-weight:900;color:white;line-height:1}
 .price-amount span{font-size:20px;color:var(--textdim);font-weight:400;font-family:var(--body)}
 .price-desc{font-size:14px;color:var(--textdim);margin:12px 0 24px;min-height:40px}
 .price-features{list-style:none;margin-bottom:32px}
-.price-features li{font-family:var(--mono);font-size:12px;color:var(--textdim);padding:8px 0;
-  border-bottom:1px solid rgba(0,229,255,0.05);display:flex;align-items:center;gap:10px}
+.price-features li{font-family:var(--mono);font-size:12px;color:var(--textdim);padding:8px 0;border-bottom:1px solid rgba(0,229,255,0.05);display:flex;align-items:center;gap:10px}
 .price-features li::before{content:'▸';color:var(--cyan2);font-size:10px}
 .price-features li.on{color:var(--text)}
 .price-btn{width:100%;font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:12px;border:none;cursor:pointer;transition:all 0.2s}
@@ -153,7 +116,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .price-btn.secondary{background:transparent;color:var(--textdim);border:1px solid var(--dim)}
 .price-btn.secondary:hover{border-color:var(--cyan2);color:var(--cyan2)}
 
-/* ── AUTH PAGE ───────────────────────────────────── */
+/* AUTH */
 #page-auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 24px}
 .auth-box{background:var(--bg2);border:1px solid rgba(0,229,255,0.15);padding:48px;max-width:440px;width:100%;position:relative}
 .auth-box::before,.auth-box::after{content:'';position:absolute;width:16px;height:16px;border-color:var(--cyan);border-style:solid;opacity:0.3}
@@ -161,42 +124,32 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .auth-box::after{bottom:0;right:0;border-width:0 1px 1px 0}
 .auth-title{font-family:var(--head);font-size:24px;font-weight:900;color:white;letter-spacing:2px;margin-bottom:8px}
 .auth-sub{font-family:var(--mono);font-size:12px;color:var(--textdim);letter-spacing:1px;margin-bottom:32px;line-height:1.8}
-.auth-input{width:100%;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.15);
-  padding:14px 16px;font-family:var(--mono);font-size:13px;color:var(--text);outline:none;
-  margin-bottom:16px;transition:border-color 0.2s}
+.auth-input{width:100%;background:rgba(0,229,255,0.03);border:1px solid rgba(0,229,255,0.15);padding:14px 16px;font-family:var(--mono);font-size:13px;color:var(--text);outline:none;margin-bottom:16px;transition:border-color 0.2s}
 .auth-input:focus{border-color:var(--cyan)}
 .auth-input::placeholder{color:var(--textdim)}
-.auth-submit{width:100%;font-family:var(--mono);font-size:13px;letter-spacing:2px;padding:14px;
-  background:var(--cyan);color:var(--bg);border:none;cursor:pointer;font-weight:700;transition:all 0.2s}
+.auth-submit{width:100%;font-family:var(--mono);font-size:13px;letter-spacing:2px;padding:14px;background:var(--cyan);color:var(--bg);border:none;cursor:pointer;font-weight:700;transition:all 0.2s}
 .auth-submit:hover{background:white;box-shadow:var(--glow-c)}
 .auth-submit:disabled{opacity:0.4;cursor:not-allowed}
 .auth-msg{font-family:var(--mono);font-size:12px;margin-top:16px;padding:12px;letter-spacing:1px;display:none}
 .auth-msg.success{background:rgba(0,255,157,0.08);border:1px solid rgba(0,255,157,0.2);color:var(--green)}
 .auth-msg.error{background:rgba(255,45,85,0.08);border:1px solid rgba(255,45,85,0.2);color:var(--red)}
 
-/* ── DASHBOARD ───────────────────────────────────── */
+/* DASHBOARD */
 #page-dashboard{padding-top:80px;min-height:100vh}
-.dashboard-header{background:rgba(7,13,26,0.9);border-bottom:1px solid rgba(0,229,255,0.08);
-  padding:32px 48px;display:flex;align-items:center;justify-content:space-between}
+.dashboard-header{background:rgba(7,13,26,0.9);border-bottom:1px solid rgba(0,229,255,0.08);padding:32px 48px;display:flex;align-items:center;justify-content:space-between}
 .dashboard-title{font-family:var(--head);font-size:22px;font-weight:900;color:white;letter-spacing:2px}
 .dashboard-body{max-width:1200px;margin:0 auto;padding:48px}
 .dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px}
-
-/* Usage card */
 .usage-card{background:var(--bg2);border:1px solid rgba(0,229,255,0.1);padding:32px}
 .usage-label{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--textdim);margin-bottom:8px}
 .usage-plan{font-family:var(--head);font-size:20px;font-weight:900;color:var(--cyan);text-shadow:var(--glow-c);text-transform:uppercase;margin-bottom:16px}
 .usage-bar-wrap{background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.1);height:6px;margin-bottom:8px;overflow:hidden}
 .usage-bar-fill{height:100%;background:linear-gradient(90deg,var(--cyan2),var(--cyan));transition:width 0.5s ease;box-shadow:var(--glow-c)}
 .usage-text{font-family:var(--mono);font-size:11px;color:var(--textdim);letter-spacing:1px}
-.upgrade-btn{margin-top:20px;width:100%;font-family:var(--mono);font-size:12px;letter-spacing:2px;
-  padding:12px;background:var(--cyan);color:var(--bg);border:none;cursor:pointer;font-weight:700;transition:all 0.2s}
+.upgrade-btn{margin-top:20px;width:100%;font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:12px;background:var(--cyan);color:var(--bg);border:none;cursor:pointer;font-weight:700;transition:all 0.2s}
 .upgrade-btn:hover{background:white;box-shadow:var(--glow-c)}
-.cancel-btn{margin-top:8px;width:100%;font-family:var(--mono);font-size:11px;letter-spacing:2px;
-  padding:10px;background:transparent;color:var(--textdim);border:1px solid var(--dim);cursor:pointer;transition:all 0.2s}
+.cancel-btn{margin-top:8px;width:100%;font-family:var(--mono);font-size:11px;letter-spacing:2px;padding:10px;background:transparent;color:var(--textdim);border:1px solid var(--dim);cursor:pointer;transition:all 0.2s}
 .cancel-btn:hover{border-color:var(--red);color:var(--red)}
-
-/* Upload card */
 .upload-card{background:var(--bg2);border:1px solid rgba(0,229,255,0.1);padding:32px}
 .card-title{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--cyan2);margin-bottom:20px}
 .upload-zone{border:2px dashed rgba(0,229,255,0.15);padding:32px;text-align:center;cursor:pointer;transition:all 0.3s}
@@ -204,32 +157,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .upload-zone-icon{font-size:32px;margin-bottom:12px;color:var(--cyan2)}
 .upload-zone-title{font-family:var(--mono);font-size:13px;color:var(--text);margin-bottom:4px}
 .upload-zone-sub{font-family:var(--mono);font-size:11px;color:var(--textdim)}
-
-/* Analysis result */
 .analysis-card{background:var(--bg2);border:1px solid rgba(0,229,255,0.1);padding:32px;grid-column:1/-1;display:none}
 .analysis-loading{text-align:center;padding:40px}
 .analysis-result-content{display:none}
 .result-score-big{font-family:var(--head);font-size:56px;font-weight:900;color:var(--green);text-shadow:var(--glow-g)}
 .result-score-label{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--textdim);margin-bottom:24px}
-.layers-list{}
 .layer-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(0,229,255,0.05)}
 .layer-name{font-family:var(--mono);font-size:11px;color:var(--textdim)}
 .layer-type{font-family:var(--mono);font-size:9px;color:rgba(74,106,144,0.6);letter-spacing:1px}
 .layer-status{font-family:var(--mono);font-size:10px;letter-spacing:2px;padding:3px 10px}
 .layer-status.neutralized{background:rgba(0,255,157,0.08);border:1px solid rgba(0,255,157,0.2);color:var(--green)}
 .layer-status.clean{background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.1);color:var(--cyan2)}
-.download-report-btn{margin-top:20px;font-family:var(--mono);font-size:12px;letter-spacing:2px;
-  padding:12px 24px;background:rgba(0,255,157,0.1);border:1px solid rgba(0,255,157,0.3);color:var(--green);cursor:pointer;transition:all 0.2s}
+.download-report-btn{margin-top:20px;font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:12px 24px;background:rgba(0,255,157,0.1);border:1px solid rgba(0,255,157,0.3);color:var(--green);cursor:pointer;transition:all 0.2s}
 .download-report-btn:hover{background:rgba(0,255,157,0.2);box-shadow:var(--glow-g)}
-
-/* History */
 .history-card{background:var(--bg2);border:1px solid rgba(0,229,255,0.1);padding:32px;grid-column:1/-1}
 .history-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(0,229,255,0.05);font-family:var(--mono);font-size:12px}
 .history-filename{color:var(--text)}
 .history-date{color:var(--textdim);font-size:10px}
 .history-result{color:var(--green);font-size:10px;letter-spacing:1px}
-
-/* Progress log */
 .progress-log{font-family:var(--mono);font-size:11px;line-height:2;margin-bottom:16px}
 .log-line{color:var(--textdim)}
 .log-line.ok{color:var(--green)}
@@ -237,21 +182,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .log-line.info{color:var(--cyan2)}
 .progress-bar-wrap{background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.1);height:4px;overflow:hidden}
 .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--cyan2),var(--cyan));width:0%;transition:width 0.3s;box-shadow:var(--glow-c)}
-
-/* Toast */
-.toast{position:fixed;bottom:32px;right:32px;z-index:1000;font-family:var(--mono);font-size:12px;
-  letter-spacing:2px;padding:14px 24px;border:1px solid;transform:translateY(100px);opacity:0;
-  transition:all 0.3s;pointer-events:none}
+.toast{position:fixed;bottom:32px;right:32px;z-index:1000;font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:14px 24px;border:1px solid;transform:translateY(100px);opacity:0;transition:all 0.3s;pointer-events:none}
 .toast.success{background:rgba(0,255,157,0.1);border-color:rgba(0,255,157,0.3);color:var(--green)}
 .toast.error{background:rgba(255,45,85,0.1);border-color:rgba(255,45,85,0.3);color:var(--red)}
 .toast.show{transform:translateY(0);opacity:1}
-
-/* Animations */
-@keyframes fadeSlideDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* Responsive */
 @media(max-width:900px){
   nav{padding:16px 24px}
   .nav-links{display:none}
@@ -263,16 +198,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 </head>
 <body>
 <div class="grid-bg"></div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo" onclick="showPage('landing')">WHEEL<span>GUARD</span></div>
   <div class="nav-links" id="nav-public">
-    <a onclick="scrollTo('how')">HOW IT WORKS</a>
-    <a onclick="scrollTo('pricing')">PRICING</a>
+    <a onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">HOW IT WORKS</a>
+    <a onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">PRICING</a>
     <a href="https://github.com/DocAiRun/wheelgrad" target="_blank">GITHUB</a>
   </div>
   <div class="nav-user" id="nav-user">
@@ -283,21 +215,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   <button class="nav-cta" id="nav-cta" onclick="showPage('auth')">SIGN IN</button>
 </nav>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- LANDING PAGE -->
-<!-- ══════════════════════════════════════════════ -->
+<!-- LANDING -->
 <div class="page active" id="page-landing">
-
   <section class="hero">
     <div class="hero-badge">POWERED BY WHEEL ALGEBRA — CARLSTRÖM 2004</div>
     <h1 class="hero-title">
       <span class="line1">YOUR MODEL DIES FROM</span>
       <span class="line2">NA<span>N</span>.</span>
     </h1>
-    <p class="hero-sub">
-      WheelGuard replaces unstable PyTorch layers with <strong>algebraically sound Wheel equivalents</strong>.
-      No more silent NaN propagation. No epsilon hacks. Just math that works.
-    </p>
+    <p class="hero-sub">WheelGuard replaces unstable PyTorch layers with <strong>algebraically sound Wheel equivalents</strong>. No more silent NaN propagation. No epsilon hacks. Just math that works.</p>
     <div class="hero-actions">
       <button class="btn-primary" onclick="showPage('auth')">START FOR FREE</button>
       <button class="btn-secondary" onclick="window.open('https://github.com/DocAiRun/wheelgrad','_blank')">VIEW ON GITHUB</button>
@@ -315,7 +241,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     <div class="section-label">THE PROBLEM</div>
     <h2 class="section-title">NaN doesn't crash.<br><span>It corrupts silently.</span></h2>
     <p class="section-sub">One undefined operation — 0/0 in LayerNorm, ∞/∞ in softmax — and your entire training run is dead.</p>
-
     <div class="nan-panel">
       <div class="nan-code">
         <div><span class="comment"># Standard PyTorch — training step 1247</span></div>
@@ -395,12 +320,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       </div>
     </div>
   </section>
-
 </div>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- AUTH PAGE -->
-<!-- ══════════════════════════════════════════════ -->
+<!-- AUTH -->
 <div class="page" id="page-auth">
   <div style="position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 24px">
     <div class="auth-box">
@@ -416,9 +338,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- DASHBOARD PAGE -->
-<!-- ══════════════════════════════════════════════ -->
+<!-- DASHBOARD -->
 <div class="page" id="page-dashboard">
   <div style="position:relative;z-index:1">
     <div class="dashboard-header">
@@ -427,8 +347,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     </div>
     <div class="dashboard-body">
       <div class="dashboard-grid">
-
-        <!-- Usage card -->
         <div class="usage-card">
           <div class="usage-label">CURRENT PLAN</div>
           <div class="usage-plan" id="dash-plan">FREE</div>
@@ -442,8 +360,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
             <button class="cancel-btn" onclick="cancelSubscription()">CANCEL SUBSCRIPTION</button>
           </div>
         </div>
-
-        <!-- Upload card -->
         <div class="upload-card">
           <div class="card-title">ANALYZE MODEL</div>
           <input type="file" id="dash-file" accept=".pt,.pth" style="display:none">
@@ -453,8 +369,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
             <div class="upload-zone-sub">.pt / .pth — PyTorch model</div>
           </div>
         </div>
-
-        <!-- Analysis result card -->
         <div class="analysis-card" id="analysis-card">
           <div class="card-title">ANALYSIS REPORT</div>
           <div class="analysis-loading" id="analysis-loading">
@@ -475,13 +389,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
             <button class="download-report-btn" onclick="downloadCurrentReport()">⬇ DOWNLOAD REPORT JSON</button>
           </div>
         </div>
-
-        <!-- History card -->
         <div class="history-card" id="history-card" style="display:none">
           <div class="card-title">ANALYSIS HISTORY</div>
           <div id="history-list"></div>
         </div>
-
       </div>
     </div>
   </div>
@@ -489,109 +400,98 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
 <script>
 // ── CONFIG ────────────────────────────────────────
+const SUPABASE_URL = 'https://lqxzyzozabyuqhxdtomv.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxeHp5em96YWJ5dXFoeGR0b212Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3ODIwMjQsImV4cCI6MjA4NzM1ODAyNH0.GQRupBIKJDKGeQaypkjcF0ZAgbGcX3Nw32R1qrTae-w';
 const API = 'https://wheelguard.onrender.com';
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 let currentUser = null;
 let currentToken = null;
 let currentReport = null;
-supabaseClient.auth.onAuthStateChange(async (event, session) => {
-  if (event === 'SIGNED_IN' && session) {
-    currentToken = session.access_token;
-    localStorage.setItem('wg_token', session.access_token);
-    localStorage.setItem('wg_email', session.user.email);
-    await loadUserAndShowDashboard(session.user.email);
-  }
-});
+let authListenerSet = false;
 
 // ── INIT ──────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
-  
-  supabaseClient.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session) {
+
+  // Listen for auth state changes (handles magic link callback)
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session) {
       currentToken = session.access_token;
       localStorage.setItem('wg_token', session.access_token);
       localStorage.setItem('wg_email', session.user.email);
       await loadUserAndShowDashboard(session.user.email);
     }
+    if (event === 'SIGNED_OUT') {
+      currentToken = null;
+      currentUser = null;
+      localStorage.removeItem('wg_token');
+      localStorage.removeItem('wg_email');
+      showPage('landing');
+    }
   });
 
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  
+  // Check for existing session
+  const { data: { session } } = await sb.auth.getSession();
   if (session) {
     currentToken = session.access_token;
-    localStorage.setItem('wg_token', session.access_token);
-    localStorage.setItem('wg_email', session.user.email);
     await loadUserAndShowDashboard(session.user.email);
     return;
   }
 
+  // Fallback: check stored token
   const token = localStorage.getItem('wg_token');
   const email = localStorage.getItem('wg_email');
-  
   if (token && email) {
     currentToken = token;
     await loadUserAndShowDashboard(email);
-  } else {
-    showPage('landing');
+    return;
   }
 
+  showPage('landing');
+
+  // Handle Stripe success redirect
   const params = new URLSearchParams(window.location.search);
   if (params.get('success')) {
     showToast('✓ SUBSCRIPTION ACTIVATED', 'success');
-    await refreshUser();
     window.history.replaceState({}, '', '/index2.html');
   }
 });
+
 // ── NAVIGATION ────────────────────────────────────
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(`page-${name}`).classList.add('active');
+  document.getElementById('page-' + name).classList.add('active');
   window.scrollTo(0, 0);
-  
   const isLoggedIn = !!currentToken;
   document.getElementById('nav-cta').style.display = isLoggedIn ? 'none' : 'block';
   document.getElementById('nav-user').style.display = isLoggedIn ? 'flex' : 'none';
   document.getElementById('nav-public').style.display = name === 'dashboard' ? 'none' : 'flex';
 }
 
-function scrollTo(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({behavior: 'smooth'});
-}
-
 // ── AUTH ──────────────────────────────────────────
 async function sendMagicLink() {
   const email = document.getElementById('auth-email').value.trim().toLowerCase();
   const btn = document.getElementById('auth-btn');
-  const msg = document.getElementById('auth-msg');
-
-  if (!email || !email.includes('@')) {
-    showAuthMsg('Please enter a valid email address', 'error');
-    return;
-  }
-
+  if (!email || !email.includes('@')) { showAuthMsg('Please enter a valid email address', 'error'); return; }
   btn.disabled = true;
   btn.textContent = 'SENDING...';
-  msg.style.display = 'none';
-
   try {
-    const res = await fetch(`${API}/auth/magic-link`, {
+    const res = await fetch(API + '/auth/magic-link', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({email})
     });
-
     if (res.ok) {
-      showAuthMsg(`✓ Magic link sent to ${email}. Check your inbox!`, 'success');
+      showAuthMsg('✓ Magic link sent to ' + email + '. Check your inbox!', 'success');
       btn.textContent = 'LINK SENT ✓';
-      // Store email for session
-      localStorage.setItem('wg_email', email);
     } else {
       const err = await res.json();
       showAuthMsg(err.detail || 'Failed to send link', 'error');
       btn.disabled = false;
       btn.textContent = 'SEND MAGIC LINK';
     }
-  } catch (e) {
+  } catch(e) {
     showAuthMsg('API unavailable. Please try again.', 'error');
     btn.disabled = false;
     btn.textContent = 'SEND MAGIC LINK';
@@ -601,14 +501,14 @@ async function sendMagicLink() {
 function showAuthMsg(text, type) {
   const msg = document.getElementById('auth-msg');
   msg.textContent = text;
-  msg.className = `auth-msg ${type}`;
+  msg.className = 'auth-msg ' + type;
   msg.style.display = 'block';
 }
 
 async function loadUserAndShowDashboard(email) {
   try {
-    const res = await fetch(`${API}/auth/me`, {
-      headers: {'Authorization': `Bearer ${currentToken}`}
+    const res = await fetch(API + '/auth/me', {
+      headers: {'Authorization': 'Bearer ' + currentToken}
     });
     if (res.ok) {
       currentUser = await res.json();
@@ -626,17 +526,20 @@ async function loadUserAndShowDashboard(email) {
 
 async function refreshUser() {
   if (!currentToken) return;
-  const res = await fetch(`${API}/auth/me`, {
-    headers: {'Authorization': `Bearer ${currentToken}`}
-  });
-  if (res.ok) {
-    currentUser = await res.json();
-    updateNavUser();
-    updateDashboard();
-  }
+  try {
+    const res = await fetch(API + '/auth/me', {
+      headers: {'Authorization': 'Bearer ' + currentToken}
+    });
+    if (res.ok) {
+      currentUser = await res.json();
+      updateNavUser();
+      updateDashboard();
+    }
+  } catch(e) {}
 }
 
 function logout() {
+  sb.auth.signOut();
   currentToken = null;
   currentUser = null;
   localStorage.removeItem('wg_token');
@@ -649,94 +552,80 @@ function updateNavUser() {
   document.getElementById('nav-email').textContent = currentUser.email;
   const planEl = document.getElementById('nav-plan');
   planEl.textContent = currentUser.plan.toUpperCase();
-  planEl.className = `nav-plan ${currentUser.plan}`;
+  planEl.className = 'nav-plan ' + currentUser.plan;
 }
 
 function updateDashboard() {
   if (!currentUser) return;
   document.getElementById('dash-welcome').textContent = currentUser.email;
   document.getElementById('dash-plan').textContent = currentUser.plan.toUpperCase();
-
   const used = currentUser.analyses_used;
   const limit = currentUser.analyses_limit;
   const pct = limit ? Math.min(100, (used / limit) * 100) : 0;
-
   document.getElementById('usage-bar').style.width = pct + '%';
   document.getElementById('usage-text').textContent = limit
-    ? `${used} / ${limit} analyses used this month`
-    : `${used} analyses used this month (unlimited)`;
-
+    ? used + ' / ' + limit + ' analyses used this month'
+    : used + ' analyses used this month (unlimited)';
   const isPaid = currentUser.plan !== 'free';
   document.getElementById('upgrade-section').style.display = isPaid ? 'none' : 'block';
   document.getElementById('cancel-section').style.display = isPaid ? 'block' : 'none';
 }
 
 // ── ANALYZE ───────────────────────────────────────
-document.getElementById('dash-file').addEventListener('change', e => {
-  if (e.target.files[0]) analyzeFile(e.target.files[0]);
-});
-
-const dzu = document.getElementById('dash-upload-zone');
-dzu.addEventListener('dragover', e => { e.preventDefault(); dzu.classList.add('dragging'); });
-dzu.addEventListener('dragleave', () => dzu.classList.remove('dragging'));
-dzu.addEventListener('drop', e => {
-  e.preventDefault(); dzu.classList.remove('dragging');
-  if (e.dataTransfer.files[0]) analyzeFile(e.dataTransfer.files[0]);
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('dash-file').addEventListener('change', e => {
+    if (e.target.files[0]) analyzeFile(e.target.files[0]);
+  });
+  const dzu = document.getElementById('dash-upload-zone');
+  dzu.addEventListener('dragover', e => { e.preventDefault(); dzu.classList.add('dragging'); });
+  dzu.addEventListener('dragleave', () => dzu.classList.remove('dragging'));
+  dzu.addEventListener('drop', e => {
+    e.preventDefault(); dzu.classList.remove('dragging');
+    if (e.dataTransfer.files[0]) analyzeFile(e.dataTransfer.files[0]);
+  });
 });
 
 async function analyzeFile(file) {
   if (!currentToken) { showPage('auth'); return; }
-
   const card = document.getElementById('analysis-card');
   const loading = document.getElementById('analysis-loading');
   const result = document.getElementById('analysis-result-content');
   const log = document.getElementById('progress-log');
   const bar = document.getElementById('dash-progress');
-
   card.style.display = 'block';
   loading.style.display = 'block';
   result.style.display = 'none';
   log.innerHTML = '';
   bar.style.width = '0%';
-
-  dzu.querySelector('.upload-zone-title').textContent = file.name.toUpperCase();
-
-  const addLog = (text, type='', pct=0) => {
+  document.querySelector('.upload-zone-title').textContent = file.name.toUpperCase();
+  const addLog = (text, type, pct) => {
     const line = document.createElement('div');
-    line.className = `log-line ${type}`;
+    line.className = 'log-line ' + (type || '');
     line.textContent = text;
     log.appendChild(line);
     if (pct) bar.style.width = pct + '%';
   };
-
   addLog('> uploading model...', 'info', 20);
-
   const formData = new FormData();
   formData.append('file', file);
-
   try {
     addLog('> scanning layers...', 'info', 50);
-    const res = await fetch(`${API}/analyze`, {
+    const res = await fetch(API + '/analyze', {
       method: 'POST',
-      headers: {'Authorization': `Bearer ${currentToken}`},
+      headers: {'Authorization': 'Bearer ' + currentToken},
       body: formData
     });
-
     if (res.status === 402) {
-      const err = await res.json();
       addLog('> FREE LIMIT REACHED — upgrade to continue', 'warn', 100);
       showToast('Upgrade to Pro for unlimited analyses', 'error');
       await refreshUser();
       return;
     }
-
     if (!res.ok) throw new Error(await res.text());
-
     const data = await res.json();
-    addLog(`> ${data.high_risk} high-risk layers detected`, data.high_risk > 0 ? 'warn' : 'ok', 80);
-    addLog(`> ${data.neutralized} layers neutralized`, 'ok', 95);
+    addLog('> ' + data.high_risk + ' high-risk layers detected', data.high_risk > 0 ? 'warn' : 'ok', 80);
+    addLog('> ' + data.neutralized + ' layers neutralized', 'ok', 95);
     addLog('> analysis complete', 'ok', 100);
-
     setTimeout(() => {
       loading.style.display = 'none';
       result.style.display = 'block';
@@ -745,29 +634,23 @@ async function analyzeFile(file) {
       refreshUser();
       loadHistory();
     }, 400);
-
   } catch(e) {
-    addLog(`> error: ${e.message}`, 'warn', 100);
+    addLog('> error: ' + e.message, 'warn', 100);
     showToast('Analysis failed', 'error');
   }
 }
 
 function renderResult(data) {
-  document.getElementById('dash-score').textContent = `${data.neutralized}/${data.total_layers}`;
+  document.getElementById('dash-score').textContent = data.neutralized + '/' + data.total_layers;
   const list = document.getElementById('dash-layers');
   list.innerHTML = '';
   (data.layers || []).slice(0, 10).forEach(layer => {
     const row = document.createElement('div');
     row.className = 'layer-row';
     const short = layer.name.split('.').slice(-3).join('.');
-    row.innerHTML = `
-      <div>
-        <div class="layer-name">${short}</div>
-        <div class="layer-type">${layer.type}</div>
-      </div>
-      <div class="layer-status ${layer.action === 'NEUTRALIZE' ? 'neutralized' : 'clean'}">
-        ${layer.action === 'NEUTRALIZE' ? '⬡ ' + layer.replacement : '✓ CLEAN'}
-      </div>`;
+    row.innerHTML = '<div><div class="layer-name">' + short + '</div><div class="layer-type">' + layer.type + '</div></div>'
+      + '<div class="layer-status ' + (layer.action === 'NEUTRALIZE' ? 'neutralized' : 'clean') + '">'
+      + (layer.action === 'NEUTRALIZE' ? '⬡ ' + layer.replacement : '✓ CLEAN') + '</div>';
     list.appendChild(row);
   });
 }
@@ -785,27 +668,24 @@ function downloadCurrentReport() {
 async function loadHistory() {
   if (!currentToken) return;
   try {
-    const res = await fetch(`${API}/analyses/history`, {
-      headers: {'Authorization': `Bearer ${currentToken}`}
+    const res = await fetch(API + '/analyses/history', {
+      headers: {'Authorization': 'Bearer ' + currentToken}
     });
     if (!res.ok) return;
     const data = await res.json();
     const analyses = data.analyses || [];
     if (analyses.length === 0) return;
-
     const card = document.getElementById('history-card');
     const list = document.getElementById('history-list');
     card.style.display = 'block';
     list.innerHTML = '';
-
     analyses.forEach(a => {
       const row = document.createElement('div');
       row.className = 'history-row';
       const date = new Date(a.created_at).toLocaleDateString();
-      row.innerHTML = `
-        <span class="history-filename">${a.filename || 'model.pt'}</span>
-        <span class="history-date">${date}</span>
-        <span class="history-result">✓ ANALYZED</span>`;
+      row.innerHTML = '<span class="history-filename">' + (a.filename || 'model.pt') + '</span>'
+        + '<span class="history-date">' + date + '</span>'
+        + '<span class="history-result">✓ ANALYZED</span>';
       list.appendChild(row);
     });
   } catch(e) {}
@@ -815,9 +695,9 @@ async function loadHistory() {
 async function handleUpgrade(plan) {
   if (!currentToken) { showPage('auth'); return; }
   try {
-    const res = await fetch(`${API}/create-checkout-session`, {
+    const res = await fetch(API + '/create-checkout-session', {
       method: 'POST',
-      headers: {'Authorization': `Bearer ${currentToken}`, 'Content-Type': 'application/json'},
+      headers: {'Authorization': 'Bearer ' + currentToken, 'Content-Type': 'application/json'},
       body: JSON.stringify({plan})
     });
     const data = await res.json();
@@ -830,9 +710,9 @@ async function handleUpgrade(plan) {
 async function cancelSubscription() {
   if (!confirm('Cancel your subscription? Access continues until period end.')) return;
   try {
-    const res = await fetch(`${API}/cancel-subscription`, {
+    const res = await fetch(API + '/cancel-subscription', {
       method: 'POST',
-      headers: {'Authorization': `Bearer ${currentToken}`}
+      headers: {'Authorization': 'Bearer ' + currentToken}
     });
     if (res.ok) {
       showToast('Subscription cancelled', 'success');
@@ -844,10 +724,10 @@ async function cancelSubscription() {
 }
 
 // ── TOAST ─────────────────────────────────────────
-function showToast(msg, type='success') {
+function showToast(msg, type) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = `toast ${type} show`;
+  t.className = 'toast ' + (type || 'success') + ' show';
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 </script>
