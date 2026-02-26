@@ -177,8 +177,6 @@ async def verify_token(token: str, email: str):
     
     # Return a simple session token (the user's id as token)
     return {"token": user["id"], "email": email, "plan": user["plan"]}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to send magic link: {str(e)}")
 
 @app.get("/auth/me")
 def get_me(authorization: str = Header(None)):
