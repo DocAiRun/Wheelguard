@@ -122,18 +122,26 @@ async def send_magic_link(email: str, token: str):
         )
 
 def verify_supabase_token(authorization: str) -> dict:
-    """Verify JWT from Supabase magic link."""
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Missing or invalid token")
     token = authorization.replace("Bearer ", "")
+    
+    # Try our custom token (user id)
+    user = get_user_by_id(token)
+    if user:
+        class SimpleUser:
+            def __init__(self, email): self.email = email
+        return SimpleUser(user["email"])
+    
+    # Fallback: try Supabase JWT
     try:
-        # Use Supabase to verify the token
         res = supabase.auth.get_user(token)
-        if not res.user:
-            raise HTTPException(status_code=401, detail="Invalid token")
-        return res.user
-    except Exception:
-        raise HTTPException(status_code=401, detail="Invalid or expired token")
+        if res.user:
+            return res.user
+    except:
+        pass
+    
+    raise HTTPException(status_code=401, detail="Invalid or expired token")
 
 # ── ROUTES ────────────────────────────────────────────
 
@@ -145,25 +153,30 @@ def root():
 def health():
     return {"status": "healthy"}
 
-@app.post("/auth/magic-link")
-async def magic_link(request: Request):
-    """Send a magic link to the user's email via Supabase Auth."""
-    body = await request.json()
-    email = body.get("email", "").strip().lower()
-    if not email or "@" not in email:
-        raise HTTPException(status_code=400, detail="Invalid email")
-
-    try:
-        # Use Supabase built-in magic link
-        supabase.auth.sign_in_with_otp({
-            "email": email,
-            "options": {
-                "email_redirect_to": f"{FRONTEND_URL}/index2.html"
-            }
-        })
-        # Ensure user exists in our users table
-        get_or_create_user(email)
-        return {"status": "sent", "message": "Magic link sent to your email"}
+@app.get("/auth/verify")
+async def verify_token(token: str, email: str):
+    user = get_user_by_email(email)
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    if user.get("magic_token") != token:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    expires = user.get("magic_token_expires_at")
+    if expires:
+        from datetime import datetime
+        exp = datetime.fromisoformat(expires.replace("Z", "+00:00"))
+        if datetime.now(timezone.utc) > exp:
+            raise HTTPException(status_code=401, detail="Token expired")
+    
+    # Clear token
+    supabase.table("users").update({
+        "magic_token": None,
+        "magic_token_expires_at": None
+    }).eq("email", email).execute()
+    
+    # Return a simple session token (the user's id as token)
+    return {"token": user["id"], "email": email, "plan": user["plan"]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to send magic link: {str(e)}")
 
